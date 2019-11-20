@@ -1,4 +1,4 @@
 郝文韬要试一下git push commit
 郝文韬要试一下git status和git diff
 hwt tests the branch
-hwt tests another merge
+hwt tests fix conflict
