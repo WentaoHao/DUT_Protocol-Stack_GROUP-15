@@ -4,3 +4,4 @@ hwt tests the branch
 hwt tests fix conflict
 hwt tests the merging 
 hwt has merged the error!
+hwt wants to test --no-ff merge
