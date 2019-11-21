@@ -2,3 +2,5 @@
 郝文韬要试一下git status和git diff
 hwt tests the branch
 hwt tests fix conflict
+hwt tests the merging 
+hwt has merged the error!
