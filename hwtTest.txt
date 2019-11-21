@@ -5,3 +5,4 @@ hwt tests fix conflict
 hwt tests the merging 
 hwt has merged the error!
 hwt wants to test --no-ff merge
+hwt try for another time --no-ff
