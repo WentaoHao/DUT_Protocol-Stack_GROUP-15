@@ -168,7 +168,7 @@ register_pcf(int (*f) (int, int, int))
 
 }
 
-/**
+/**处理改变:如果拓扑或者邻居节点有任何更新,调用正确的函数更新路由表
  *Process changes in neighborhood or/and topology.
  *Re-calculates the neighborhood/topology if there
  *are any updates - then calls the right functions to
@@ -189,15 +189,15 @@ olsr_process_changes(void)
     OLSR_PRINTF(3, "CHANGES IN HNA\n");
 #endif
 
-  if (!changes_neighborhood && !changes_topology && !changes_hna)
+  if (!changes_neighborhood && !changes_topology && !changes_hna)//都没改,直接返回
     return;
 
-  if (olsr_cnf->debug_level > 0 && olsr_cnf->clear_screen && isatty(1)) {
+  if (olsr_cnf->debug_level > 0 && olsr_cnf->clear_screen && isatty(1)) {//终端清屏,打印协议信息
     clear_console();
     printf("       *** %s (%s on %s) ***\n", olsrd_version, build_date, build_host);
   }
 
-  if (changes_neighborhood) {
+  if (changes_neighborhood) {//邻居变了
     if (olsr_cnf->lq_level < 1) {
       olsr_calculate_mpr();
     } else {
@@ -246,14 +246,14 @@ olsr_process_changes(void)
  *Also initalizes other variables
  */
 void
-olsr_init_tables(void)
+olsr_init_tables(void)//初始化路由表
 {
   changes_topology = false;
   changes_neighborhood = false;
   changes_hna = false;
 
   /* Set avl tree comparator */
-  if (olsr_cnf->ipsize == 4) {
+  if (olsr_cnf->ipsize == 4) {//ipv4
     avl_comp_default = avl_comp_ipv4;
     avl_comp_prefix_default = avl_comp_ipv4_prefix;
   } else {
