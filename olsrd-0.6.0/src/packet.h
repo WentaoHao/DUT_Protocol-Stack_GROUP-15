@@ -52,12 +52,12 @@ struct hello_neighbor {
   union olsr_ip_addr main_address;
   union olsr_ip_addr address;
   struct hello_neighbor *next;
-  olsr_linkcost cost;
+  olsr_linkcost cost;     //无符号32位整数
   uint32_t linkquality[0];
 };
 
 struct hello_message {
-  olsr_reltime vtime;
+  olsr_reltime vtime;//无符号32位整数
   olsr_reltime htime;
   union olsr_ip_addr source_addr;
   uint16_t packet_seq_number;
@@ -68,7 +68,7 @@ struct hello_message {
 
 };
 
-struct tc_mpr_addr {
+struct tc_mpr_addr {//这是个链表里面的节点,链表存的ip地址
   union olsr_ip_addr address;
   struct tc_mpr_addr *next;
   uint32_t linkquality[0];
@@ -78,11 +78,11 @@ struct tc_message {
   olsr_reltime vtime;
   union olsr_ip_addr source_addr;
   union olsr_ip_addr originator;
-  uint16_t packet_seq_number;
-  uint8_t hop_count;
+  uint16_t packet_seq_number;//发送者的序号 p44
+  uint8_t hop_count;//跳数
   uint8_t ttl;
-  uint16_t ansn;
-  struct tc_mpr_addr *multipoint_relay_selector_address;
+  uint16_t ansn;//序号
+  struct tc_mpr_addr *multipoint_relay_selector_address;//mpr链表
 };
 
 /*
