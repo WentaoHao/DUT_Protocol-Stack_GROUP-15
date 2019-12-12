@@ -70,7 +70,7 @@ olsr_init_mid_set(void)
 
   OLSR_PRINTF(5, "MID: init\n");
 
-  for (idx = 0; idx < HASHSIZE; idx++) {
+  for (idx = 0; idx < HASHSIZE; idx++) {//hashsize==128,初始化是创建了128个只有一个节点的链表
     mid_set[idx].next = &mid_set[idx];
     mid_set[idx].prev = &mid_set[idx];
 
@@ -81,7 +81,7 @@ olsr_init_mid_set(void)
   return 1;
 }
 
-void olsr_delete_all_mid_entries(void) {
+void olsr_delete_all_mid_entries(void) {//遍历128个链表,如果链表不止一个节点,删除他
   int hash;
 
   for (hash = 0; hash < HASHSIZE; hash++) {
@@ -91,7 +91,7 @@ void olsr_delete_all_mid_entries(void) {
   }
 }
 
-void olsr_cleanup_mid(union olsr_ip_addr *orig) {
+void olsr_cleanup_mid(union olsr_ip_addr *orig) {//对于一个给定的ip,删除entry
   struct mid_entry *mid;
   mid = mid_lookup_entry_bymain(orig);
   if (mid) {

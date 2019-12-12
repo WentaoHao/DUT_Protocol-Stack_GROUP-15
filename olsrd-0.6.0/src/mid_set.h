@@ -47,19 +47,19 @@
 #include "mantissa.h"
 #include "packet.h"
 
-struct mid_address {
+struct mid_address {//Multiple Interface Declaration (MID) messages复合接口声明信息 ,这个信息的地址
   union olsr_ip_addr alias;
   struct mid_entry *main_entry;
   struct mid_address *next_alias;
   uint32_t vtime;
 
-  /* These are for the reverse list */
+  /* These are for the reverse list *///双向链表(hwt)
   struct mid_address *prev;
   struct mid_address *next;
 };
 
 /*
- * Contains the main addr of a node and a list of aliases
+ * Contains the main addr of a node and a list of aliases//一个节点的主地址和 好多个别名 的列表?别名是main的其他接口(的ip)
  */
 struct mid_entry {
   union olsr_ip_addr main_addr;
