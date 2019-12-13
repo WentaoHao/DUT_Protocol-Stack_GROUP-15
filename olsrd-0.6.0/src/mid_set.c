@@ -103,7 +103,7 @@ void olsr_cleanup_mid(union olsr_ip_addr *orig) {//对于一个给定的ip,删�
  * Wrapper for the timer callback.
  */
 static void
-olsr_expire_mid_entry(void *context)
+olsr_expire_mid_entry(void *context)//超时,移除mid entry
 {
 #ifdef DEBUG
   struct ipaddr_str buf;
@@ -147,7 +147,7 @@ olsr_set_mid_timer(struct mid_entry *mid, olsr_reltime rel_timer)
  * @return false if mid_address is unnecessary, true otherwise
  */
 
-static bool
+static bool//添加一个mid元组,静态
 insert_mid_tuple(union olsr_ip_addr *m_addr, struct mid_address *alias, olsr_reltime vtime)
 {
   struct mid_entry *tmp;
