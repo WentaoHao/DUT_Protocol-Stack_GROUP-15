@@ -58,17 +58,17 @@ struct hello_neighbor {
 
 struct hello_message {
   olsr_reltime vtime;//无符号32位整数
-  olsr_reltime htime;
+  olsr_reltime htime;//间隔时间
   union olsr_ip_addr source_addr;
   uint16_t packet_seq_number;
   uint8_t hop_count;
   uint8_t ttl;
-  uint8_t willingness;
-  struct hello_neighbor *neighbors;
+  uint8_t willingness;//是否愿意做MPR? 7是总是,1是从不
+  struct hello_neighbor *neighbors;//邻接口的信息,是个链表
 
 };
 
-struct tc_mpr_addr {//这是个链表里面的节点,链表存的ip地址
+struct tc_mpr_addr {//这是个链表里面的节点,链表存的ip地址,tc是拓扑控制,用于拓扑发现
   union olsr_ip_addr address;
   struct tc_mpr_addr *next;
   uint32_t linkquality[0];
@@ -94,7 +94,7 @@ struct tc_message {
  *.....
  */
 
-struct mid_alias {
+struct mid_alias {//mid 链表的节点,用于寸mid信息里面非主地址的接口的地址,第109行就用到了
   union olsr_ip_addr alias_addr;
   struct mid_alias *next;
 };

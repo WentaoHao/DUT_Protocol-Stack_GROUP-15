@@ -59,7 +59,7 @@ static bool sending_tc = false;
  *
  *@return nada
  */
-void
+void//释放一个hello信息的空间(因为有链表,实际上就是释放了链表的空间)
 olsr_free_hello_packet(struct hello_message *message)
 {
   struct hello_neighbor *nb;
@@ -117,11 +117,11 @@ olsr_build_hello_packet(struct hello_message *message, struct interface *outif)
 #endif
 
   /* Walk all links of this interface */
-  OLSR_FOR_ALL_LINK_ENTRIES(links) {
+  OLSR_FOR_ALL_LINK_ENTRIES(links) {//这个大括号对应的很靠下,.,是个for遍历
 #ifdef DEBUG
     struct ipaddr_str buf;
 #endif
-    int lnk = lookup_link_status(links);
+    int lnk = lookup_link_status(links);//状态有对称.非对称,.丢失
     /* Update the status */
 
     /* Check if this link tuple is registered on the outgoing interface */
@@ -291,7 +291,7 @@ olsr_build_hello_packet(struct hello_message *message, struct interface *outif)
  *@return nada
  */
 void
-olsr_free_tc_packet(struct tc_message *message)
+olsr_free_tc_packet(struct tc_message *message)//free了一个链表
 {
   struct tc_mpr_addr *mprs;
 

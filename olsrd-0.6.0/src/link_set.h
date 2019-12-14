@@ -68,7 +68,7 @@ struct link_entry {
   uint8_t prev_status;
 
   /*
-   * Hysteresis
+   * Hysteresis     这个词的意思是滞后??
    */
   float L_link_quality;
   int L_link_pending;
