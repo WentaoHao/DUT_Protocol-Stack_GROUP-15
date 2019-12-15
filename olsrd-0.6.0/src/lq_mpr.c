@@ -73,9 +73,9 @@ olsr_calculate_lq_mpr(void)
       continue;
     }
 
-    neigh->is_mpr = true;
+    neigh->is_mpr = true;//邻居状态是对称并且意愿是always的都是mpr
 
-    if (neigh->is_mpr != neigh->was_mpr) {
+    if (neigh->is_mpr != neigh->was_mpr) {//标记改变了mpr
       mpr_changes = true;
     }
 

@@ -143,6 +143,7 @@ olsr_spf_del_cand_tree(struct avl_tree *tree, struct tc_entry *tc)
  */
 static void
 olsr_spf_add_path_list(struct list_node *head, int *path_count, struct tc_entry *tc)
+	olsr_spf_add_path_list(struct list_node *head, int *path_count, struct tc_entry *tc)
 {
 #if !defined(NODEBUG) && defined(DEBUG)
   struct ipaddr_str pathbuf, nbuf;
@@ -168,9 +169,9 @@ olsr_spf_add_path_list(struct list_node *head, int *path_count, struct tc_entry 
 static struct tc_entry *
 olsr_spf_extract_best(struct avl_tree *tree)
 {
-  struct avl_node *node = avl_walk_first(tree);
+  struct avl_node *node = avl_walk_first(tree);//找到开销最小的节点
 
-  return (node ? cand_tree2tc(node) : NULL);
+  return (node ? cand_tree2tc(node) : NULL);//节点是空就返回空,否则返回将它转化为tc的结果
 }
 
 /*
@@ -181,7 +182,7 @@ olsr_spf_extract_best(struct avl_tree *tree)
  * path cost is better.
  */
 static void
-olsr_spf_relax(struct avl_tree *cand_tree, struct tc_entry *tc)
+olsr_spf_relax(struct avl_tree *cand_tree, struct tc_entry *tc)//加入一个节点后,修改候选树这个点连接的点的cost,修改已选树中cost变小的点
 {
   struct avl_node *edge_node;
   olsr_linkcost new_cost;
@@ -280,16 +281,16 @@ olsr_spf_run_full(struct avl_tree *cand_tree, struct list_node *path_list, int *
 
   *path_count = 0;
 
-  while ((tc = olsr_spf_extract_best(cand_tree))) {
+  while ((tc = olsr_spf_extract_best(cand_tree))) {//从候选树中找一个最佳节点出来,为空时,候选树为空,算法结束
 
-    olsr_spf_relax(cand_tree, tc);
+    olsr_spf_relax(cand_tree, tc);//更新候选树的节点的最短路径
 
     /*
      * move the best path from the candidate tree
      * to the path list.
      */
-    olsr_spf_del_cand_tree(cand_tree, tc);
-    olsr_spf_add_path_list(path_list, path_count, tc);
+    olsr_spf_del_cand_tree(cand_tree, tc);//从候选树中删除这个节点
+    olsr_spf_add_path_list(path_list, path_count, tc);//将这个节点加入path_list中
   }
 }
 
