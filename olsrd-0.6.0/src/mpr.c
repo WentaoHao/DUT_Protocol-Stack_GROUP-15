@@ -395,35 +395,35 @@ olsr_calculate_mpr(void)
 
   OLSR_PRINTF(3, "\n**RECALCULATING MPR**\n\n");
 
-  olsr_clear_mprs();
-  two_hop_count = olsr_calculate_two_hop_neighbors();
-  two_hop_covered_count = add_will_always_nodes();
+  olsr_clear_mprs();//清空mpr集合
+  two_hop_count = olsr_calculate_two_hop_neighbors();//计算二跳邻居总数
+  two_hop_covered_count = add_will_always_nodes();//添加意愿值为7 always的节点的二跳节点
 
   /*
    *Calculate MPRs based on WILLINGNESS
    */
 
-  for (i = WILL_ALWAYS - 1; i > WILL_NEVER; i--) {
+  for (i = WILL_ALWAYS - 1; i > WILL_NEVER; i--) {//意愿值从大到小遍历
     struct neighbor_entry *mprs;
-    struct neighbor_2_list_entry *two_hop_list = olsr_find_2_hop_neighbors_with_1_link(i);
+    struct neighbor_2_list_entry *two_hop_list = olsr_find_2_hop_neighbors_with_1_link(i);//找到对应意愿值的节点
 
-    while (two_hop_list != NULL) {
+    while (two_hop_list != NULL) {//
       struct neighbor_2_list_entry *tmp;
       //printf("CHOSEN FROM 1 LINK\n");
       if (!two_hop_list->neighbor_2->neighbor_2_nblist.next->neighbor->is_mpr)
-        olsr_chosen_mpr(two_hop_list->neighbor_2->neighbor_2_nblist.next->neighbor, &two_hop_covered_count);
+        olsr_chosen_mpr(two_hop_list->neighbor_2->neighbor_2_nblist.next->neighbor, &two_hop_covered_count);//把这些节点设为MPR,把这些节点的邻居标为可以达到的节点(two_hop_covered)
       tmp = two_hop_list;
       two_hop_list = two_hop_list->next;;
       free(tmp);
     }
 
-    if (two_hop_covered_count >= two_hop_count) {
+    if (two_hop_covered_count >= two_hop_count) {//全都覆盖到了,就不再循环了
       i = WILL_NEVER;
       break;
     }
     //printf("two hop covered count: %d\n", two_hop_covered_count);
 
-    while ((mprs = olsr_find_maximum_covered(i)) != NULL) {
+    while ((mprs = olsr_find_maximum_covered(i)) != NULL) {//还没有全覆盖到,接着添加,这个方法是找到能够覆盖最多二跳节点的节点作为mpr
       //printf("CHOSEN FROM MAXCOV\n");
       olsr_chosen_mpr(mprs, &two_hop_covered_count);
 
@@ -441,9 +441,9 @@ olsr_calculate_mpr(void)
   //neighbortable.neighbor_mpr_seq++;
 
   /* Optimize selection */
-  olsr_optimize_mpr_set();
+  olsr_optimize_mpr_set();//优化mpr集合,将二跳节点已经没覆盖的mpr移除
 
-  if (olsr_check_mpr_changes()) {
+  if (olsr_check_mpr_changes()) {//如果有移除,做一些修改
     OLSR_PRINTF(3, "CHANGES IN MPR SET\n");
     if (olsr_cnf->tc_redundancy > 0)
       signal_link_changes(true);
