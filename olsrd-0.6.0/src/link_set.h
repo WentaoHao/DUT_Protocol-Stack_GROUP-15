@@ -40,7 +40,7 @@
  */
 
 /*
- * Link sensing database for the OLSR routing daemon
+ * Link sensing database for the OLSR routing daemon 守护进程 程序 虚拟光驱服务
  */
 
 #ifndef _LINK_SET_H
@@ -88,16 +88,16 @@ struct link_entry {
   uint32_t loss_link_multiplier;
 
   /* cost of this link */
-  olsr_linkcost linkcost;
+  olsr_linkcost linkcost;//无符号32位整数
 
   struct list_node link_list;          /* double linked list of all link entries */
   uint32_t linkquality[0];
 };
 
 /* inline to recast from link_list back to link_entry */
-LISTNODE2STRUCT(list2link, struct link_entry, link_list);
+LISTNODE2STRUCT(list2link, struct link_entry, link_list);//这是带参数的宏,形成了一个函数
 
-#define OLSR_LINK_JITTER       5        /* percent */
+#define OLSR_LINK_JITTER       5        /* percent *///jitter的意思是抖动
 #define OLSR_LINK_HELLO_JITTER 0        /* percent jitter */
 #define OLSR_LINK_SYM_JITTER   0        /* percent jitter */
 #define OLSR_LINK_LOSS_JITTER  0        /* percent jitter */
