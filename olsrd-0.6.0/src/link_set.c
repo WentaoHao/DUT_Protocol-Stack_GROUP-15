@@ -40,7 +40,7 @@
  */
 
 /*
- * Link sensing database for the OLSR routing daemon
+ * Link sensing database for the OLSR routing daemon   olsrd的链路感知数据库
  */
 #include <assert.h>
 
