@@ -65,7 +65,7 @@
 
 /* a composite metric is used for path selection */
 struct rt_metric {
-  olsr_linkcost cost;
+  olsr_linkcost cost;//无符号32位整数
   uint32_t hops;
 };
 
